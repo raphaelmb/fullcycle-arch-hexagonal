@@ -2,7 +2,6 @@ package db
 
 import (
 	"database/sql"
-	"fmt"
 
 	_ "github.com/mattn/go-sqlite3"
 	"github.com/raphaelmb/fullcycle-arch-hexagonal/application"
@@ -32,7 +31,6 @@ func (p *ProductDb) Get(id string) (application.ProductInterface, error) {
 func (p *ProductDb) Save(product application.ProductInterface) (application.ProductInterface, error) {
 	var rows int
 	p.db.QueryRow("SELECT id FROM products WHERE id=?", product.GetID()).Scan(&rows)
-	fmt.Println("ROWS", rows)
 	if rows == 0 {
 		_, err := p.create(product)
 		if err != nil {
